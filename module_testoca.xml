@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_testoca" default="compile.module.testoca">
+  <dirname property="module.testoca.basedir" file="${ant.file.module_testoca}"/>
+  
+  <property name="module.jdk.home.testoca" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.testoca" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.testoca" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.testoca" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="testoca.output.dir" value="${module.testoca.basedir}/out/production/TestOca"/>
+  <property name="testoca.testoutput.dir" value="${module.testoca.basedir}/out/test/TestOca"/>
+  
+  <path id="testoca.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="testoca.module.production.classpath">
+    <path refid="${module.jdk.classpath.testoca}"/>
+  </path>
+  
+  <path id="testoca.runtime.production.module.classpath">
+    <pathelement location="${testoca.output.dir}"/>
+  </path>
+  
+  <path id="testoca.module.classpath">
+    <path refid="${module.jdk.classpath.testoca}"/>
+    <pathelement location="${testoca.output.dir}"/>
+  </path>
+  
+  <path id="testoca.runtime.module.classpath">
+    <pathelement location="${testoca.testoutput.dir}"/>
+    <pathelement location="${testoca.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.testoca">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.testoca">
+    <patternset refid="excluded.from.module.testoca"/>
+  </patternset>
+  
+  <path id="testoca.module.sourcepath">
+    <dirset dir="${module.testoca.basedir}">
+      <include name="_19StringConcatenation/src"/>
+      <include name="_21StringImutability/src"/>
+      <include name="_20StringEquality/src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.testoca" depends="compile.module.testoca.production,compile.module.testoca.tests" description="Compile module TestOca"/>
+  
+  <target name="compile.module.testoca.production" depends="register.custom.compilers" description="Compile module TestOca; production classes">
+    <mkdir dir="${testoca.output.dir}"/>
+    <javac2 destdir="${testoca.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.testoca}/javac">
+      <compilerarg line="${compiler.args.testoca}"/>
+      <bootclasspath refid="testoca.module.bootclasspath"/>
+      <classpath refid="testoca.module.production.classpath"/>
+      <src refid="testoca.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.testoca"/>
+    </javac2>
+    
+    <copy todir="${testoca.output.dir}">
+      <fileset dir="${module.testoca.basedir}/_19StringConcatenation/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.testoca.basedir}/_21StringImutability/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.testoca.basedir}/_20StringEquality/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.testoca.tests" depends="register.custom.compilers,compile.module.testoca.production" description="compile module TestOca; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.testoca" description="cleanup module">
+    <delete dir="${testoca.output.dir}"/>
+    <delete dir="${testoca.testoutput.dir}"/>
+  </target>
+</project>
