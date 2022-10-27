@@ -1,4 +1,4 @@
-package _36Polymorphism;
+package PACKAGE_NAME._36Polymorphism;
 
 public interface CanRun {
 }

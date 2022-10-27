@@ -1,6 +1,5 @@
-package ContinueStatement;
+package PACKAGE_NAME._28ContinueStatement;
 
-import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
 
 public class ContinueStatement {
 

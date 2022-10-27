@@ -1,6 +1,5 @@
-package acd.lp;
+package PACKAGE_NAME._11WrapperClasses;
 
-import org.omg.PortableInterceptor.INACTIVE;
 
 public class WrapperTypes {
 

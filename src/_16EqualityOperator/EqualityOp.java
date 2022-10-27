@@ -1,3 +1,5 @@
+package PACKAGE_NAME._16EqualityOperator;
+
 public class EqualityOp {
 
     public static void main(String[] args) {
